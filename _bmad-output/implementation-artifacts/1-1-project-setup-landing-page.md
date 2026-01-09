@@ -1,6 +1,6 @@
 # Story 1.1: Project Setup & Landing Page
 
-## Status: review
+## Status: done
 
 ## Story
 
