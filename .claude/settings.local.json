@@ -20,7 +20,11 @@
       "Bash(git push:*)",
       "Bash(git checkout:*)",
       "Bash(git merge:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(dir /s /b \"c:\\\\Development\\\\Claude Code\\\\projects\\\\Darts Club\\\\src\")",
+      "Bash(if not exist \"c:\\\\Development\\\\Claude Code\\\\projects\\\\Darts Club\\\\_bmad-output\\\\planning-artifacts\" mkdir \"c:\\\\Development\\\\Claude Code\\\\projects\\\\Darts Club\\\\_bmad-output\\\\planning-artifacts\")",
+      "Skill(bmad:bmm:workflows:create-story)",
+      "Skill(bmad:bmm:workflows:create-story:*)"
     ]
   }
 }

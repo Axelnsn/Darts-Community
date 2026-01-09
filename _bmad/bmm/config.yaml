@@ -3,7 +3,7 @@
 # Version: 6.0.0-alpha.22
 # Date: 2026-01-09T12:45:45.858Z
 
-project_name: Darts Club
+project_name: Darts Community
 user_skill_level: intermediate
 planning_artifacts: "{project-root}/_bmad-output/planning-artifacts"
 implementation_artifacts: "{project-root}/_bmad-output/implementation-artifacts"
