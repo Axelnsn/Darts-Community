@@ -43,8 +43,8 @@ development_status:
   epic-1: in-progress
   1-1-project-setup-landing-page: done
   1-2-email-password-authentication: done
-  1-3-oauth-authentication: backlog
-  1-4-account-settings-gdpr: backlog
+  1-3-oauth-authentication: ready-for-dev
+  1-4-account-settings-gdpr: done
   epic-1-retrospective: optional
 
   # Epic 2: Player Profile Core (5 stories)

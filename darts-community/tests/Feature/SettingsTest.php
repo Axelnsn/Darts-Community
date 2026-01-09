@@ -488,4 +488,117 @@ class SettingsTest extends TestCase
         $response->assertSee(route('privacy-policy'), false);
         $response->assertSee(route('terms'), false);
     }
+
+    // ============================
+    // Purge Deleted Users Command Tests
+    // ============================
+
+    public function test_purge_command_does_nothing_when_no_users_to_purge(): void
+    {
+        $this->artisan('users:purge-deleted')
+            ->expectsOutput('No users to purge.')
+            ->assertSuccessful();
+    }
+
+    public function test_purge_command_does_not_delete_users_within_grace_period(): void
+    {
+        // Create a soft-deleted user within grace period (15 days ago)
+        $user = User::factory()->create([
+            'gdpr_deletion_requested_at' => now()->subDays(15),
+        ]);
+        $user->delete();
+
+        $this->artisan('users:purge-deleted')
+            ->expectsOutput('No users to purge.')
+            ->assertSuccessful();
+
+        // User should still exist (soft deleted)
+        $this->assertDatabaseHas('users', ['id' => $user->id]);
+    }
+
+    public function test_purge_command_deletes_users_after_grace_period(): void
+    {
+        // Create a soft-deleted user past grace period (31 days ago)
+        $user = User::factory()->create([
+            'gdpr_deletion_requested_at' => now()->subDays(31),
+        ]);
+        $user->delete();
+        $userId = $user->id;
+
+        $this->artisan('users:purge-deleted')
+            ->expectsOutput('Found 1 user(s) with expired grace period.')
+            ->expectsOutput('Successfully purged 1 user(s).')
+            ->assertSuccessful();
+
+        // User should be permanently deleted
+        $this->assertDatabaseMissing('users', ['id' => $userId]);
+    }
+
+    public function test_purge_command_dry_run_does_not_delete(): void
+    {
+        // Create a soft-deleted user past grace period
+        $user = User::factory()->create([
+            'gdpr_deletion_requested_at' => now()->subDays(31),
+        ]);
+        $user->delete();
+
+        $this->artisan('users:purge-deleted', ['--dry-run' => true])
+            ->expectsOutput('Found 1 user(s) with expired grace period.')
+            ->expectsOutput('DRY RUN - No users will be deleted.')
+            ->assertSuccessful();
+
+        // User should still exist (soft deleted)
+        $this->assertDatabaseHas('users', ['id' => $user->id]);
+    }
+
+    public function test_purge_command_only_deletes_users_with_gdpr_deletion_requested(): void
+    {
+        // User 1: Soft deleted WITH gdpr_deletion_requested_at (should be purged)
+        $userToPurge = User::factory()->create([
+            'gdpr_deletion_requested_at' => now()->subDays(31),
+        ]);
+        $userToPurge->delete();
+
+        // User 2: Soft deleted WITHOUT gdpr_deletion_requested_at (should NOT be purged)
+        $userToKeep = User::factory()->create([
+            'gdpr_deletion_requested_at' => null,
+        ]);
+        $userToKeep->delete();
+
+        $this->artisan('users:purge-deleted')
+            ->expectsOutput('Found 1 user(s) with expired grace period.')
+            ->assertSuccessful();
+
+        // User with GDPR request should be permanently deleted
+        $this->assertDatabaseMissing('users', ['id' => $userToPurge->id]);
+
+        // User without GDPR request should still exist (soft deleted)
+        $this->assertDatabaseHas('users', ['id' => $userToKeep->id]);
+    }
+
+    // ============================
+    // Settings Page Legal Links Tests
+    // ============================
+
+    public function test_settings_page_links_to_privacy_policy(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->get('/settings');
+
+        $response->assertSee(route('privacy-policy'), false);
+    }
+
+    public function test_settings_page_links_to_terms(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->get('/settings');
+
+        $response->assertSee(route('terms'), false);
+    }
 }

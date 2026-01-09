@@ -4,6 +4,18 @@
 @section('description', 'Créez votre profil de joueur de fléchettes professionnel. Gérez votre équipement, personnalisez votre identité et connectez avec votre club.')
 
 @section('content')
+    <!-- Flash Messages -->
+    @if (session('status') === 'account-deleted')
+        <div class="fixed top-4 left-1/2 -translate-x-1/2 z-50 max-w-md w-full mx-4" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition>
+            <div class="bg-dart-green text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
+                <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <p>{{ __('Votre compte a été supprimé. Vos données seront définitivement effacées après 30 jours.') }}</p>
+            </div>
+        </div>
+    @endif
+
     <!-- Navigation Bar -->
     <nav class="absolute top-0 left-0 right-0 z-20 py-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -140,7 +152,8 @@
                 <nav class="flex gap-6">
                     <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">À propos</a>
                     <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">Contact</a>
-                    <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">Mentions légales</a>
+                    <a href="{{ route('privacy-policy') }}" class="text-gray-300 hover:text-white transition-colors text-sm">Confidentialité</a>
+                    <a href="{{ route('terms') }}" class="text-gray-300 hover:text-white transition-colors text-sm">CGU</a>
                 </nav>
             </div>
         </div>

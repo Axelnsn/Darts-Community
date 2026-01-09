@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/settings/email', [SettingsController::class, 'updateEmail'])->name('settings.email.update');
     Route::put('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
-    Route::get('/settings/export', [SettingsController::class, 'exportData'])->name('settings.export');
+    Route::get('/settings/export', [SettingsController::class, 'exportData'])->name('settings.export')->middleware('throttle:5,1440'); // 5 exports per day
     Route::delete('/settings/account', [SettingsController::class, 'destroy'])->name('settings.destroy');
 });
 
