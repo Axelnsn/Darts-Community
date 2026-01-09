@@ -42,7 +42,7 @@ development_status:
   # Epic 1: Foundation & Authentication (4 stories)
   epic-1: in-progress
   1-1-project-setup-landing-page: done
-  1-2-email-password-authentication: backlog
+  1-2-email-password-authentication: done
   1-3-oauth-authentication: backlog
   1-4-account-settings-gdpr: backlog
   epic-1-retrospective: optional

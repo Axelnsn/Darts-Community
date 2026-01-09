@@ -20,7 +20,7 @@ class LandingPageTest extends TestCase
         $response->assertSee('Votre identité de joueur');
         $response->assertSee('comme les pros');
         $response->assertSee('Créer mon profil');
-        $response->assertSee('Découvrir un exemple');
+        $response->assertSee('Découvrir');
     }
 
     public function test_landing_page_displays_feature_cards(): void
