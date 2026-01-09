@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PlayerProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
@@ -11,13 +12,19 @@ Route::get('/privacy-policy', fn() => view('pages.privacy-policy'))->name('priva
 Route::get('/terms', fn() => view('pages.terms'))->name('terms');
 
 Route::get('/dashboard', function () {
-    return redirect()->route('profile.edit');
+    return redirect()->route('player.profile.edit');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // Breeze profile routes (email/account management)
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Player profile routes (player info)
+    Route::get('/player/profile/edit', [PlayerProfileController::class, 'edit'])->name('player.profile.edit');
+    Route::put('/player/profile', [PlayerProfileController::class, 'update'])->name('player.profile.update');
+    Route::get('/player/profile', [PlayerProfileController::class, 'show'])->name('player.profile.show');
 
     // Settings routes
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');

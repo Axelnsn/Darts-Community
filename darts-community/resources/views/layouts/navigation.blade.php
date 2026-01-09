@@ -18,7 +18,7 @@
                     <a href="{{ route('home') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-white/80 hover:text-white transition-colors">
                         {{ __('Accueil') }}
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium {{ request()->routeIs('profile.*') ? 'text-dart-gold border-b-2 border-dart-gold' : 'text-white/80 hover:text-white' }} transition-colors">
+                    <a href="{{ route('player.profile.edit') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium {{ request()->routeIs('player.profile.*') ? 'text-dart-gold border-b-2 border-dart-gold' : 'text-white/80 hover:text-white' }} transition-colors">
                         {{ __('Mon profil') }}
                     </a>
                     <a href="{{ route('settings.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium {{ request()->routeIs('settings.*') ? 'text-dart-gold border-b-2 border-dart-gold' : 'text-white/80 hover:text-white' }} transition-colors">
@@ -43,7 +43,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('player.profile.edit')">
                             {{ __('Mon profil') }}
                         </x-dropdown-link>
 
@@ -83,7 +83,7 @@
             <a href="{{ route('home') }}" class="block w-full ps-3 pe-4 py-2 text-left text-base font-medium text-white hover:bg-dart-green transition-colors">
                 {{ __('Accueil') }}
             </a>
-            <a href="{{ route('profile.edit') }}" class="block w-full ps-3 pe-4 py-2 text-left text-base font-medium {{ request()->routeIs('profile.*') ? 'text-dart-gold bg-dart-green' : 'text-white hover:bg-dart-green' }} transition-colors">
+            <a href="{{ route('player.profile.edit') }}" class="block w-full ps-3 pe-4 py-2 text-left text-base font-medium {{ request()->routeIs('player.profile.*') ? 'text-dart-gold bg-dart-green' : 'text-white hover:bg-dart-green' }} transition-colors">
                 {{ __('Mon profil') }}
             </a>
             <a href="{{ route('settings.index') }}" class="block w-full ps-3 pe-4 py-2 text-left text-base font-medium {{ request()->routeIs('settings.*') ? 'text-dart-gold bg-dart-green' : 'text-white hover:bg-dart-green' }} transition-colors">
@@ -99,7 +99,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <a href="{{ route('profile.edit') }}" class="block w-full ps-3 pe-4 py-2 text-left text-base font-medium text-white hover:bg-dart-green transition-colors">
+                <a href="{{ route('player.profile.edit') }}" class="block w-full ps-3 pe-4 py-2 text-left text-base font-medium text-white hover:bg-dart-green transition-colors">
                     {{ __('Mon profil') }}
                 </a>
 
