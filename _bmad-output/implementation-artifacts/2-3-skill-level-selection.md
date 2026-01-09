@@ -1,6 +1,6 @@
 # Story 2.3: Skill Level Selection
 
-## Status: review
+## Status: done
 
 ## Story
 
@@ -103,13 +103,14 @@ Story 2.3 implementation complete:
 **New Files:**
 - `app/Enums/SkillLevel.php` - Skill level enum with labels and colors
 - `resources/views/components/profile/skill-badge.blade.php` - Badge component
-- `tests/Feature/Profile/SkillLevelTest.php` - 17 comprehensive tests
+- `tests/Feature/Profile/SkillLevelTest.php` - 21 comprehensive tests
+- `database/migrations/2026_01_09_210718_add_index_to_players_skill_level.php` - Index for skill_level
 
 **Modified Files:**
 - `app/Models/Player.php` - Added SkillLevel cast
 - `app/Http/Requests/PlayerProfileUpdateRequest.php` - Added skill_level validation
 - `resources/views/pages/profile/edit.blade.php` - Added skill level dropdown
-- `resources/views/pages/profile/show.blade.php` - Added skill badge display
+- `resources/views/pages/profile/show.blade.php` - Added skill badge display, skill_level in completeness calculation
 
 ## Change Log
 
@@ -118,3 +119,33 @@ Story 2.3 implementation complete:
 | 2026-01-08 | 1.0 | Initial story creation from PRD | Sarah (PO) |
 | 2026-01-09 | 1.1 | Story prepared for development | Claude |
 | 2026-01-09 | 2.0 | Implementation complete - all ACs satisfied | Amelia (Dev Agent) |
+| 2026-01-09 | 2.1 | Code review - 7 issues fixed, 4 new tests added | Claude (Reviewer) |
+
+## Senior Developer Review (AI)
+
+**Review Date:** 2026-01-09
+**Reviewer:** Claude (Adversarial Code Review)
+**Outcome:** ✅ APPROVED (after fixes)
+
+### Issues Found and Fixed
+
+| Severity | Issue | Resolution |
+|----------|-------|------------|
+| HIGH | Pro color was 'yellow' instead of 'gold' per specs | Changed to 'gold' in SkillLevel enum |
+| HIGH | skill_level missing from profile completeness calculation | Added to show.blade.php calculation |
+| HIGH | No test for old() value preservation after validation error | Added test case |
+| MEDIUM | skill-badge component could crash with null level | Added @if($level) guard |
+| MEDIUM | No database index on skill_level column | Added migration for index |
+| MEDIUM | Badge component color mapping used 'yellow' key | Updated to 'gold' key |
+| LOW | Docblock said "color class" but returned color name | Fixed docblock wording |
+
+### Tests Added
+- `test_skill_level_preserved_after_validation_error` - Verifies old() works
+- `test_skill_badge_component_handles_null_gracefully` - Null safety
+- `test_profile_completeness_includes_skill_level` - Completeness calculation
+- `test_skill_level_enum_returns_correct_colors` - Enum color() method
+
+### Final Test Results
+- **Story tests:** 21 passed (60 assertions)
+- **Full suite:** 176 passed (441 assertions)
+- **No regressions detected**

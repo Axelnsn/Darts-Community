@@ -161,24 +161,28 @@ class SkillLevelTest extends TestCase
         $view->assertSee('Pro');
     }
 
-    public function test_skill_badge_has_different_colors_per_level(): void
+    public function test_skill_level_enum_returns_correct_colors(): void
     {
-        // Each level should have a distinct visual style
-        $colorMap = [
-            'debutant' => 'gray',
-            'amateur' => 'green',
-            'confirme' => 'blue',
-            'semi-pro' => 'purple',
-            'pro' => 'yellow', // gold
-        ];
+        // Each level should have a distinct color via the enum color() method
+        $this->assertEquals('gray', SkillLevel::DEBUTANT->color());
+        $this->assertEquals('green', SkillLevel::AMATEUR->color());
+        $this->assertEquals('blue', SkillLevel::CONFIRME->color());
+        $this->assertEquals('purple', SkillLevel::SEMI_PRO->color());
+        $this->assertEquals('gold', SkillLevel::PRO->color());
+    }
 
-        foreach ($colorMap as $level => $expectedColor) {
+    public function test_skill_badge_renders_with_styling(): void
+    {
+        // Verify each level renders with proper styling classes
+        foreach (SkillLevel::cases() as $level) {
             $view = $this->blade(
                 '<x-profile.skill-badge :level="$level" />',
-                ['level' => SkillLevel::from($level)]
+                ['level' => $level]
             );
 
-            $view->assertSee($expectedColor, false);
+            // All badges should have the skill-badge class and display the label
+            $view->assertSee('skill-badge', false);
+            $view->assertSee($level->label());
         }
     }
 
@@ -218,5 +222,60 @@ class SkillLevelTest extends TestCase
         $response->assertStatus(200);
         // Badge should appear in the header area near the name
         $response->assertSeeInOrder(['Mon Profil', 'Pro']);
+    }
+
+    // ===========================================
+    // Additional Tests: Form State Preservation
+    // ===========================================
+
+    public function test_skill_level_preserved_after_validation_error(): void
+    {
+        $user = User::factory()->create();
+
+        // Submit with a valid skill_level but invalid other field
+        $response = $this->actingAs($user)->put(route('player.profile.update'), [
+            'skill_level' => 'pro',
+            'nickname' => str_repeat('x', 100), // exceeds 50 char limit
+        ]);
+
+        $response->assertSessionHasErrors('nickname');
+
+        // Follow redirect and check that skill_level is preserved in old()
+        $response = $this->actingAs($user)->get(route('player.profile.edit'));
+        $response->assertSee('value="pro"', false);
+    }
+
+    public function test_skill_badge_component_handles_null_gracefully(): void
+    {
+        // Render badge with null level - should output nothing
+        $view = $this->blade(
+            '<x-profile.skill-badge :level="$level" />',
+            ['level' => null]
+        );
+
+        $view->assertDontSee('skill-badge');
+    }
+
+    public function test_profile_completeness_includes_skill_level(): void
+    {
+        $user = User::factory()->create();
+        $player = $user->player;
+
+        // Profile with no skill_level should show incomplete
+        $response = $this->actingAs($user)->get(route('player.profile.show'));
+        $response->assertSee('Profil incomplet');
+
+        // Fill all fields including skill_level
+        $player->update([
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'nickname' => 'JD',
+            'date_of_birth' => '1990-01-01',
+            'city' => 'Paris',
+            'skill_level' => 'amateur',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('player.profile.show'));
+        $response->assertDontSee('Profil incomplet');
     }
 }

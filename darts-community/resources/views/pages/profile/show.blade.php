@@ -91,8 +91,9 @@
                                 $player->nickname,
                                 $player->date_of_birth,
                                 $player->city,
+                                $player->skill_level,
                             ])->filter()->count();
-                            $totalFields = 5;
+                            $totalFields = 6;
                             $percentage = round(($filledFields / $totalFields) * 100);
                         @endphp
 

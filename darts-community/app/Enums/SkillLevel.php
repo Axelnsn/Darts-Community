@@ -25,7 +25,7 @@ enum SkillLevel: string
     }
 
     /**
-     * Get the color class for the skill level badge.
+     * Get the color name for the skill level badge.
      */
     public function color(): string
     {
@@ -34,7 +34,7 @@ enum SkillLevel: string
             self::AMATEUR => 'green',
             self::CONFIRME => 'blue',
             self::SEMI_PRO => 'purple',
-            self::PRO => 'yellow',
+            self::PRO => 'gold',
         };
     }
 }
