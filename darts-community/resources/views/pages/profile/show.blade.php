@@ -17,13 +17,18 @@
                     <div class="space-y-6">
                         <!-- Display Name -->
                         <div class="border-b border-gray-200 pb-4">
-                            <h3 class="text-2xl font-bold text-gray-900">
-                                @if($player->first_name || $player->last_name)
-                                    {{ $player->first_name }} {{ $player->last_name }}
-                                @else
-                                    <span class="text-gray-400 italic">Non renseigné</span>
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-2xl font-bold text-gray-900">
+                                    @if($player->first_name || $player->last_name)
+                                        {{ $player->first_name }} {{ $player->last_name }}
+                                    @else
+                                        <span class="text-gray-400 italic">Non renseigné</span>
+                                    @endif
+                                </h3>
+                                @if($player->skill_level)
+                                    <x-profile.skill-badge :level="$player->skill_level" />
                                 @endif
-                            </h3>
+                            </div>
                             @if($player->nickname)
                                 <p class="text-lg text-dart-green font-medium">"{{ $player->nickname }}"</p>
                             @endif
@@ -86,8 +91,9 @@
                                 $player->nickname,
                                 $player->date_of_birth,
                                 $player->city,
+                                $player->skill_level,
                             ])->filter()->count();
-                            $totalFields = 5;
+                            $totalFields = 6;
                             $percentage = round(($filledFields / $totalFields) * 100);
                         @endphp
 
