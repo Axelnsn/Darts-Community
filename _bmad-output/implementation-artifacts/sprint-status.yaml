@@ -41,7 +41,7 @@ story_location: _bmad-output/implementation-artifacts
 development_status:
   # Epic 1: Foundation & Authentication (4 stories)
   epic-1: in-progress
-  1-1-project-setup-landing-page: in-progress
+  1-1-project-setup-landing-page: review
   1-2-email-password-authentication: backlog
   1-3-oauth-authentication: backlog
   1-4-account-settings-gdpr: backlog
