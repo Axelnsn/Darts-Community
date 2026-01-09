@@ -1,9 +1,46 @@
-@extends('layouts.app')
+@extends('layouts.public')
 
 @section('title', 'Darts Community - Votre identité de joueur comme les pros')
 @section('description', 'Créez votre profil de joueur de fléchettes professionnel. Gérez votre équipement, personnalisez votre identité et connectez avec votre club.')
 
 @section('content')
+    <!-- Navigation Bar -->
+    <nav class="absolute top-0 left-0 right-0 z-20 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="{{ route('home') }}" class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-dart-gold rounded-full flex items-center justify-center">
+                        <span class="text-xl">🎯</span>
+                    </div>
+                    <span class="text-xl font-bold text-white">Darts Community</span>
+                </a>
+
+                <!-- Auth Links -->
+                <div class="flex items-center gap-4">
+                    @auth
+                        <a href="{{ route('profile.edit') }}" class="text-white/80 hover:text-white transition-colors text-sm font-medium">
+                            Mon profil
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                            @csrf
+                            <button type="submit" class="text-white/80 hover:text-white transition-colors text-sm font-medium">
+                                Déconnexion
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="text-white/80 hover:text-white transition-colors text-sm font-medium">
+                            Connexion
+                        </a>
+                        <a href="{{ route('register') }}" class="px-4 py-2 bg-dart-gold text-dart-green rounded-lg hover:bg-yellow-400 transition-colors text-sm font-semibold">
+                            S'inscrire
+                        </a>
+                    @endauth
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-dart-green via-dart-green to-dart-green-light overflow-hidden">
         <!-- Background Pattern -->
@@ -26,11 +63,11 @@
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-dart-green bg-dart-gold rounded-lg hover:bg-yellow-400 transition-colors duration-200 min-w-[200px] min-h-[56px]">
+                <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-dart-green bg-dart-gold rounded-lg hover:bg-yellow-400 transition-colors duration-200 min-w-[200px] min-h-[56px]">
                     Créer mon profil
                 </a>
-                <a href="#" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white rounded-lg hover:bg-white/10 transition-colors duration-200 min-w-[200px] min-h-[56px]">
-                    Découvrir un exemple
+                <a href="#features" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white rounded-lg hover:bg-white/10 transition-colors duration-200 min-w-[200px] min-h-[56px]">
+                    Découvrir
                 </a>
             </div>
         </div>
@@ -44,7 +81,7 @@
     </section>
 
     <!-- Feature Cards Section -->
-    <section class="py-16 sm:py-24 bg-white">
+    <section id="features" class="py-16 sm:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -59,7 +96,7 @@
                 <!-- Feature Card 1: Profil Joueur -->
                 <div class="bg-gray-50 rounded-2xl p-6 sm:p-8 text-center hover:shadow-lg transition-shadow duration-200">
                     <div class="w-16 h-16 bg-dart-green/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-3xl" role="img" aria-label="Profil">&#128100;</span>
+                        <span class="text-3xl" role="img" aria-label="Profil">👤</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">Profil Joueur</h3>
                     <p class="text-gray-600">
@@ -70,7 +107,7 @@
                 <!-- Feature Card 2: Mon Setup -->
                 <div class="bg-gray-50 rounded-2xl p-6 sm:p-8 text-center hover:shadow-lg transition-shadow duration-200">
                     <div class="w-16 h-16 bg-dart-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-3xl" role="img" aria-label="Fléchettes">&#127919;</span>
+                        <span class="text-3xl" role="img" aria-label="Fléchettes">🎯</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">Mon Setup</h3>
                     <p class="text-gray-600">
@@ -81,7 +118,7 @@
                 <!-- Feature Card 3: Communauté -->
                 <div class="bg-gray-50 rounded-2xl p-6 sm:p-8 text-center hover:shadow-lg transition-shadow duration-200">
                     <div class="w-16 h-16 bg-dart-red/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-3xl" role="img" aria-label="Communauté">&#127963;</span>
+                        <span class="text-3xl" role="img" aria-label="Communauté">🏛️</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">Communauté</h3>
                     <p class="text-gray-600">
