@@ -10,16 +10,16 @@ use App\Enums\WalkonSongType;
 
         @if($player->walkon_song_type === WalkonSongType::YouTube)
             @php
-                // Extract video ID from YouTube URL
+                // Extract video ID from YouTube URL - only alphanumeric, underscore, and hyphen allowed
                 $videoId = null;
-                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/', $player->walkon_song_url, $matches)) {
+                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/', $player->walkon_song_url, $matches)) {
                     $videoId = $matches[1];
                 }
             @endphp
             @if($videoId)
                 <div class="aspect-video rounded-lg overflow-hidden">
                     <iframe
-                        src="https://youtube.com/embed/{{ $videoId }}"
+                        src="https://youtube.com/embed/{{ e($videoId) }}"
                         class="w-full h-full"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -29,16 +29,16 @@ use App\Enums\WalkonSongType;
             @endif
         @elseif($player->walkon_song_type === WalkonSongType::Spotify)
             @php
-                // Extract track ID from Spotify URL
+                // Extract track ID from Spotify URL - Spotify IDs are 22 alphanumeric characters
                 $trackId = null;
-                if (preg_match('/open\.spotify\.com\/track\/([a-zA-Z0-9]+)/', $player->walkon_song_url, $matches)) {
+                if (preg_match('/open\.spotify\.com\/track\/([a-zA-Z0-9]{22})/', $player->walkon_song_url, $matches)) {
                     $trackId = $matches[1];
                 }
             @endphp
             @if($trackId)
                 <div class="rounded-lg overflow-hidden">
                     <iframe
-                        src="https://open.spotify.com/embed/track/{{ $trackId }}"
+                        src="https://open.spotify.com/embed/track/{{ e($trackId) }}"
                         class="w-full"
                         height="152"
                         frameborder="0"

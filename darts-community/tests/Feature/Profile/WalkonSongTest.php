@@ -328,6 +328,35 @@ class WalkonSongTest extends TestCase
         Storage::disk('public')->assertMissing($oldFilePath);
     }
 
+    public function test_uploading_new_mp3_removes_old_mp3_file(): void
+    {
+        Storage::fake('public');
+
+        $oldFilePath = 'walkon/old-song.mp3';
+        Storage::disk('public')->put($oldFilePath, 'fake old mp3 content');
+
+        $this->player->update([
+            'walkon_song_type' => WalkonSongType::Mp3,
+            'walkon_song_url' => $oldFilePath,
+        ]);
+
+        $newFile = UploadedFile::fake()->create('new-walkon.mp3', 1024, 'audio/mpeg');
+
+        $this->actingAs($this->user)
+            ->post(route('player.profile.walkon.store'), [
+                'walkon_song_type' => 'mp3',
+                'walkon_song_file' => $newFile,
+            ]);
+
+        // Old file should be deleted
+        Storage::disk('public')->assertMissing($oldFilePath);
+
+        // New file should exist
+        $this->player->refresh();
+        Storage::disk('public')->assertExists($this->player->walkon_song_url);
+        $this->assertNotEquals($oldFilePath, $this->player->walkon_song_url);
+    }
+
     // =========================================
     // Task 5: Walkon Player Component Tests
     // =========================================

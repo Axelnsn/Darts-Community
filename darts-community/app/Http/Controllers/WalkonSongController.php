@@ -16,6 +16,11 @@ class WalkonSongController extends Controller
     public function store(WalkonSongRequest $request): RedirectResponse
     {
         $player = $request->user()->player;
+
+        if (!$player) {
+            abort(404, 'Player profile not found.');
+        }
+
         $type = WalkonSongType::from($request->validated('walkon_song_type'));
 
         // Delete old MP3 file if switching from MP3 to another type
@@ -36,7 +41,7 @@ class WalkonSongController extends Controller
             // Handle YouTube or Spotify URL
             $player->update([
                 'walkon_song_type' => $type,
-                'walkon_song_url' => $request->validated('walkon_song_url'),
+                'walkon_song_url' => trim($request->validated('walkon_song_url')),
             ]);
         }
 
@@ -50,6 +55,10 @@ class WalkonSongController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         $player = $request->user()->player;
+
+        if (!$player) {
+            abort(404, 'Player profile not found.');
+        }
 
         // Delete MP3 file if exists
         if ($player->walkon_song_type === WalkonSongType::Mp3 && $player->walkon_song_url) {

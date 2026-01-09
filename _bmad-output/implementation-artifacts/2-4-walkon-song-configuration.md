@@ -33,10 +33,10 @@
   - [x] Validate YouTube URL format
   - [x] Validate Spotify URL format
 
-- [x] Task 3: MP3 Upload & Validation (AC: 4, 6)
+- [x] Task 3: MP3 Upload & Validation (AC: 4)
   - [x] Validate MP3 file type
   - [x] Validate file size (max 10MB)
-  - [x] Validate duration (max 2 minutes) - Note: Duration validation not implemented yet (requires getID3/ffprobe)
+  - [ ] **[DEFERRED]** Validate duration (max 2 minutes) - Requires external library getID3 or ffprobe. See Tech Debt below.
   - [x] Store in `storage/app/public/walkon/`
 
 - [x] Task 4: Update Profile Edit View (AC: 1, 8, 9)
@@ -122,6 +122,32 @@ Use `getID3` library or `ffprobe` to check duration.
 - `resources/views/pages/profile/show.blade.php` - Added walkon-player component
 - `tests/Feature/Profile/PlayerModelTest.php` - Updated expected fillable attributes
 
+## Senior Developer Review (AI)
+
+**Review Date:** 2026-01-09
+**Reviewer:** Amelia (Code Review Agent)
+**Outcome:** APPROVED with fixes applied
+
+### Issues Found & Fixed
+
+| Severity | Issue | Resolution |
+|----------|-------|------------|
+| CRITICAL | AC #6 (MP3 duration validation) marked complete but not implemented | Marked as DEFERRED - requires external library |
+| MEDIUM | XSS vulnerability - video/track IDs not escaped | Fixed: Added `e()` escaping and strict ID length validation |
+| MEDIUM | Missing test for MP3 → MP3 replacement | Fixed: Added `test_uploading_new_mp3_removes_old_mp3_file()` |
+| MEDIUM | No null check for player in controller | Fixed: Added abort(404) if player is null |
+| MEDIUM | Regex validation could be bypassed | Fixed: Added `$` anchor and strict ID length |
+| LOW | No URL trim/sanitization | Fixed: Added `trim()` for URLs |
+
+### Tech Debt
+
+- **MP3 Duration Validation:** Requires installation of getID3 library or ffprobe. Should be addressed in a dedicated tech debt story.
+
+### Test Results
+
+- 29 WalkonSongTest tests passing (82 assertions)
+- 205 total tests passing (523 assertions)
+
 ## Change Log
 
 | Date | Version | Description | Author |
@@ -129,3 +155,4 @@ Use `getID3` library or `ffprobe` to check duration.
 | 2026-01-08 | 1.0 | Initial story creation from PRD | Sarah (PO) |
 | 2026-01-09 | 1.1 | Story prepared for development | Claude |
 | 2026-01-09 | 2.0 | Story implementation complete | Amelia (Dev) |
+| 2026-01-09 | 2.1 | Code review fixes applied | Amelia (Review) |

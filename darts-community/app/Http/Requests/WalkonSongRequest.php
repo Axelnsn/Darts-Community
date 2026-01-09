@@ -33,13 +33,13 @@ class WalkonSongRequest extends FormRequest
             $rules['walkon_song_url'] = [
                 'required',
                 'url',
-                'regex:/^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)[\w-]+/',
+                'regex:/^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)[a-zA-Z0-9_-]{11}(&.*)?$/',
             ];
         } elseif ($type === 'spotify') {
             $rules['walkon_song_url'] = [
                 'required',
                 'url',
-                'regex:/^https?:\/\/open\.spotify\.com\/track\/[\w]+/',
+                'regex:/^https?:\/\/open\.spotify\.com\/track\/[a-zA-Z0-9]{22}(\?.*)?$/',
             ];
         } elseif ($type === 'mp3') {
             $rules['walkon_song_file'] = [
