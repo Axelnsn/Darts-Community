@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\SkillLevel;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PlayerProfileUpdateRequest extends FormRequest
 {
@@ -27,6 +29,7 @@ class PlayerProfileUpdateRequest extends FormRequest
             'nickname' => ['nullable', 'string', 'max:50'],
             'date_of_birth' => ['nullable', 'date', 'before:today', 'after:' . now()->subYears(120)->format('Y-m-d')],
             'city' => ['nullable', 'string', 'max:255'],
+            'skill_level' => ['nullable', Rule::enum(SkillLevel::class)],
         ];
     }
 
@@ -45,6 +48,7 @@ class PlayerProfileUpdateRequest extends FormRequest
             'date_of_birth.before' => 'La date de naissance doit être dans le passé.',
             'date_of_birth.after' => 'La date de naissance n\'est pas valide.',
             'city.max' => 'La ville ne peut pas dépasser 255 caractères.',
+            'skill_level.enum' => 'Le niveau de jeu sélectionné n\'est pas valide.',
         ];
     }
 
@@ -61,6 +65,7 @@ class PlayerProfileUpdateRequest extends FormRequest
             'nickname' => 'pseudo',
             'date_of_birth' => 'date de naissance',
             'city' => 'ville',
+            'skill_level' => 'niveau de jeu',
         ];
     }
 }

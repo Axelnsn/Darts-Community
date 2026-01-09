@@ -196,6 +196,19 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('city')" />
                             </div>
 
+                            <div>
+                                <x-input-label for="skill_level" value="Niveau de jeu" />
+                                <select id="skill_level" name="skill_level" class="mt-1 block w-full border-gray-300 focus:border-dart-green focus:ring-dart-green rounded-md shadow-sm">
+                                    <option value="">Sélectionnez votre niveau</option>
+                                    @foreach(\App\Enums\SkillLevel::cases() as $level)
+                                        <option value="{{ $level->value }}" @selected(old('skill_level', $player->skill_level?->value) === $level->value)>
+                                            {{ $level->label() }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('skill_level')" />
+                            </div>
+
                             <div class="flex items-center gap-4">
                                 <x-primary-button>Enregistrer</x-primary-button>
 
