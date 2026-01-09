@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SkillLevel;
+use App\Enums\WalkonSongType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +27,8 @@ class Player extends Model
         'skill_level',
         'profile_photo_path',
         'cover_photo_path',
+        'walkon_song_type',
+        'walkon_song_url',
         'public_slug',
     ];
 
@@ -39,6 +42,7 @@ class Player extends Model
         return [
             'date_of_birth' => 'date',
             'skill_level' => SkillLevel::class,
+            'walkon_song_type' => WalkonSongType::class,
         ];
     }
 

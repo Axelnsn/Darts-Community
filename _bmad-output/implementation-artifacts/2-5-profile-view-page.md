@@ -1,0 +1,105 @@
+# Story 2.5: Profile View Page
+
+## Status: ready-for-dev
+
+## Story
+
+**As a** player,
+**I want** to view my complete profile,
+**so that** I can see how my information is presented.
+
+## Acceptance Criteria
+
+1. Dedicated profile view page (not edit mode)
+2. Cover photo displayed as header banner
+3. Profile photo displayed as avatar overlay
+4. Name, nickname, city displayed prominently
+5. Skill level badge visible
+6. Walk-on song player embedded (if configured)
+7. Card-based layout for profile sections
+8. Mobile-responsive design
+9. Navigation to edit mode for profile owner
+
+## Tasks / Subtasks
+
+- [ ] Task 1: Create Profile View Route & Controller (AC: 1, 9)
+  - [ ] Add `GET /profile` route
+  - [ ] Add show method to ProfileController
+  - [ ] Add "Modifier" button for owner
+
+- [ ] Task 2: Create Profile View Template (AC: 2, 3, 4, 7)
+  - [ ] Create `resources/views/pages/profile/show.blade.php`
+  - [ ] Add cover photo as header banner
+  - [ ] Add profile photo as avatar overlay
+  - [ ] Display name, nickname, city
+  - [ ] Use card components for sections
+
+- [ ] Task 3: Integrate Components (AC: 5, 6)
+  - [ ] Include skill-badge component
+  - [ ] Include walkon-player component
+
+- [ ] Task 4: Responsive Design (AC: 8)
+  - [ ] Ensure mobile-first layout
+  - [ ] Test on various screen sizes
+  - [ ] Adjust card layout for mobile
+
+## Dev Notes
+
+### Relevant Architecture References
+
+**Profile View Layout:**
+```
+┌─────────────────────────────────┐
+│        Cover Photo Banner       │
+│    ┌────────┐                   │
+│    │ Avatar │                   │
+│    └────────┘                   │
+├─────────────────────────────────┤
+│  Name  │  Nickname  │  City     │
+│        Skill Badge              │
+├─────────────────────────────────┤
+│     Walk-on Song Player         │
+├─────────────────────────────────┤
+│  [Club Card]  [Setup Card]      │
+└─────────────────────────────────┘
+```
+
+**Card Component:**
+```blade
+<x-ui.card title="Mon Setup">
+    {{ $slot }}
+</x-ui.card>
+```
+
+### Testing
+
+**Test Location:** `tests/Feature/Profile/ProfileViewTest.php`
+
+### Dependencies
+
+- Requires Story 2.1 (Player Model) to be completed first
+- Requires Story 2.2 (Profile Photo) for images
+- Requires Story 2.3 (Skill Level) for badge
+- Requires Story 2.4 (Walk-on Song) for audio player
+
+## Dev Agent Record
+
+### Implementation Plan
+*À compléter lors du développement*
+
+### Debug Log
+*À compléter lors du développement*
+
+### Completion Notes
+*À compléter lors du développement*
+
+## File List
+
+*À compléter lors du développement*
+
+## Change Log
+
+| Date | Version | Description | Author |
+|------|---------|-------------|--------|
+| 2026-01-08 | 1.0 | Initial story creation from PRD | Sarah (PO) |
+| 2026-01-09 | 1.1 | Story prepared for development | Claude |

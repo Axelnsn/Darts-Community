@@ -30,6 +30,8 @@ class PlayerModelTest extends TestCase
             'skill_level',
             'profile_photo_path',
             'cover_photo_path',
+            'walkon_song_type',
+            'walkon_song_url',
             'public_slug',
         ];
 
