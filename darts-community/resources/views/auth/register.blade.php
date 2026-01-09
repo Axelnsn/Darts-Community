@@ -29,6 +29,20 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        <!-- GDPR Consent -->
+        <div class="mt-4">
+            <label for="gdpr_consent" class="flex items-start gap-2">
+                <input type="checkbox" id="gdpr_consent" name="gdpr_consent" value="1" class="rounded border-gray-300 text-dart-green shadow-sm focus:ring-dart-green mt-1" {{ old('gdpr_consent') ? 'checked' : '' }}>
+                <span class="text-sm text-gray-600">
+                    {!! __("J'accepte la <a href=\":privacy_url\" class=\"text-dart-green hover:text-dart-green-light underline\" target=\"_blank\">politique de confidentialité</a> et les <a href=\":terms_url\" class=\"text-dart-green hover:text-dart-green-light underline\" target=\"_blank\">conditions d'utilisation</a>.", [
+                        'privacy_url' => route('privacy-policy'),
+                        'terms_url' => route('terms'),
+                    ]) !!}
+                </span>
+            </label>
+            <x-input-error :messages="$errors->get('gdpr_consent')" class="mt-2" />
+        </div>
+
         <div class="mt-6">
             <x-primary-button>
                 {{ __("S'inscrire") }}

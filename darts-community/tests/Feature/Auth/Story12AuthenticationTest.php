@@ -83,6 +83,7 @@ class Story12AuthenticationTest extends TestCase
             'email' => 'test@example.com',
             'password' => 'password', // Exactly 8 characters
             'password_confirmation' => 'password',
+            'gdpr_consent' => '1',
         ]);
 
         $this->assertAuthenticated();
@@ -109,6 +110,7 @@ class Story12AuthenticationTest extends TestCase
             'email' => 'unique@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
+            'gdpr_consent' => '1',
         ]);
 
         $this->assertDatabaseHas('users', ['email' => 'unique@example.com']);
@@ -122,6 +124,7 @@ class Story12AuthenticationTest extends TestCase
             'email' => 'newuser@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
+            'gdpr_consent' => '1',
         ]);
 
         $response->assertRedirect('/profile/edit');

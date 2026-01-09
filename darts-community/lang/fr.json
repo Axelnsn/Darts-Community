@@ -63,5 +63,33 @@
     "The :attribute must be a valid email address.": "Le champ :attribute doit être une adresse email valide.",
     "The :attribute has already been taken.": "Ce :attribute est déjà utilisé.",
     "The :attribute must be at least :min characters.": "Le champ :attribute doit contenir au moins :min caractères.",
-    "The :attribute confirmation does not match.": "La confirmation du :attribute ne correspond pas."
+    "The :attribute confirmation does not match.": "La confirmation du :attribute ne correspond pas.",
+
+    "Account Settings": "Paramètres du compte",
+    "Settings": "Paramètres",
+    "Update Email": "Modifier l'email",
+    "Update your email address. A verification will be sent to the new address.": "Mettez à jour votre adresse email. Une vérification sera envoyée à la nouvelle adresse.",
+    "Current email": "Email actuel",
+    "New email address": "Nouvelle adresse email",
+    "Email updated successfully.": "Email mis à jour avec succès.",
+    "Password updated successfully.": "Mot de passe mis à jour avec succès.",
+    "Confirm New Password": "Confirmer le nouveau mot de passe",
+
+    "Export My Data": "Exporter mes données",
+    "Download a copy of all your personal data in JSON format (GDPR).": "Téléchargez une copie de toutes vos données personnelles au format JSON (RGPD).",
+    "Data exported successfully.": "Données exportées avec succès.",
+
+    "Delete My Account": "Supprimer mon compte",
+    "Once your account is deleted, all data will be permanently erased after a 30-day grace period.": "Une fois votre compte supprimé, toutes vos données seront définitivement effacées après une période de grâce de 30 jours.",
+    "This action is irreversible. Your data will be kept for 30 days before permanent deletion. Type SUPPRIMER to confirm.": "Cette action est irréversible. Vos données seront conservées pendant 30 jours avant suppression définitive. Tapez SUPPRIMER pour confirmer.",
+    "Type SUPPRIMER to confirm": "Tapez SUPPRIMER pour confirmer",
+    "Confirmation": "Confirmation",
+    "Your account has been deleted.": "Votre compte a été supprimé.",
+    "The confirmation field must be SUPPRIMER.": "Le champ de confirmation doit être SUPPRIMER.",
+
+    "Privacy Policy": "Politique de confidentialité",
+    "Terms of Service": "Conditions d'utilisation",
+    "I accept the privacy policy": "J'accepte la politique de confidentialité",
+    "You must accept the privacy policy to register.": "Vous devez accepter la politique de confidentialité pour vous inscrire.",
+    "The gdpr consent field is required.": "Vous devez accepter la politique de confidentialité."
 }

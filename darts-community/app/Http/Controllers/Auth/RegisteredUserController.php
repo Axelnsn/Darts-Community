@@ -32,12 +32,17 @@ class RegisteredUserController extends Controller
         $request->validate([
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::min(8)],
+            'gdpr_consent' => ['required', 'accepted'],
+        ], [
+            'gdpr_consent.required' => __('Vous devez accepter la politique de confidentialité pour vous inscrire.'),
+            'gdpr_consent.accepted' => __('Vous devez accepter la politique de confidentialité pour vous inscrire.'),
         ]);
 
         $user = User::create([
             'name' => explode('@', $request->email)[0],
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'gdpr_consent_at' => now(),
         ]);
 
         event(new Registered($user));
