@@ -1,6 +1,6 @@
 # Story 1.1: Project Setup & Landing Page
 
-## Status: ready-for-dev
+## Status: review
 
 ## Story
 
@@ -97,54 +97,54 @@ And a .gitignore should exclude vendor, .env, etc.
 ## Tasks
 
 ### Task 1: Initialize Laravel Project
-- [ ] Run `composer create-project laravel/laravel darts-community`
-- [ ] Verify PHP 8.2+ and Laravel 11.x versions
-- [ ] Configure .env for local development (SQLite)
-- [ ] Run `php artisan key:generate`
-- [ ] Test with `php artisan serve`
+- [x] Run `composer create-project laravel/laravel darts-community`
+- [x] Verify PHP 8.2+ and Laravel 11.x versions
+- [x] Configure .env for local development (SQLite)
+- [x] Run `php artisan key:generate`
+- [x] Test with `php artisan serve`
 
 ### Task 2: Create Base Layout
-- [ ] Create `resources/views/layouts/app.blade.php`
-- [ ] Add Tailwind CSS Play CDN: `<script src="https://cdn.tailwindcss.com"></script>`
-- [ ] Add Inter font from Google Fonts
-- [ ] Configure custom colors in Tailwind config block
-- [ ] Add responsive meta viewport
-- [ ] Create @yield('content') section
+- [x] Create `resources/views/layouts/app.blade.php`
+- [x] Add Tailwind CSS Play CDN: `<script src="https://cdn.tailwindcss.com"></script>`
+- [x] Add Inter font from Google Fonts
+- [x] Configure custom colors in Tailwind config block
+- [x] Add responsive meta viewport
+- [x] Create @yield('content') section
 
 ### Task 3: Create Landing Page View
-- [ ] Create `resources/views/pages/home.blade.php`
-- [ ] Extend app layout
-- [ ] Build hero section with:
+- [x] Create `resources/views/pages/home.blade.php`
+- [x] Extend app layout
+- [x] Build hero section with:
   - Background gradient (green/dark)
   - Headline: "Votre identité de joueur comme les pros"
   - Sub-headline about the platform
   - CTA buttons
-- [ ] Build feature cards section
-- [ ] Add footer with basic links
+- [x] Build feature cards section
+- [x] Add footer with basic links
 
 ### Task 4: Configure Route
-- [ ] Add route in `routes/web.php`: `Route::get('/', fn() => view('pages.home'))->name('home');`
-- [ ] Verify route works
+- [x] Add route in `routes/web.php`: `Route::get('/', fn() => view('pages.home'))->name('home');`
+- [x] Verify route works
 
 ### Task 5: Style with Design System Colors
-- [ ] Primary: #1B4D3E (Dartboard Green)
-- [ ] Secondary: #D4AF37 (Gold)
-- [ ] Accent: #C41E3A (Target Red)
-- [ ] Apply consistent spacing (16px/24px)
-- [ ] Ensure 4.5:1 contrast ratios
+- [x] Primary: #1B4D3E (Dartboard Green)
+- [x] Secondary: #D4AF37 (Gold)
+- [x] Accent: #C41E3A (Target Red)
+- [x] Apply consistent spacing (16px/24px)
+- [x] Ensure 4.5:1 contrast ratios
 
 ### Task 6: Mobile Optimization
-- [ ] Test on mobile viewport
-- [ ] Adjust hero for stacked layout on mobile
-- [ ] Ensure cards stack vertically
-- [ ] Verify touch targets
+- [x] Test on mobile viewport
+- [x] Adjust hero for stacked layout on mobile
+- [x] Ensure cards stack vertically
+- [x] Verify touch targets
 
 ### Task 7: Git Setup
-- [ ] Initialize git repository
-- [ ] Create appropriate .gitignore
-- [ ] Initial commit
-- [ ] Create GitHub repository
-- [ ] Push to remote
+- [x] Initialize git repository
+- [x] Create appropriate .gitignore
+- [x] Initial commit
+- [x] Create GitHub repository
+- [x] Push to remote
 
 ---
 
@@ -205,16 +205,16 @@ darts-community/
 
 ## Definition of Done
 
-- [ ] Laravel 11+ project initialized and running
-- [ ] Tailwind CSS working via CDN (no build)
-- [ ] Landing page displays at root URL
-- [ ] Hero section with French copy and CTAs
-- [ ] Feature cards section (3 cards)
-- [ ] Page is mobile-responsive
-- [ ] Base layout template created and reusable
-- [ ] Git repository initialized and pushed to GitHub
-- [ ] Code follows PSR-12 and Laravel conventions
-- [ ] No console errors in browser
+- [x] Laravel 11+ project initialized and running
+- [x] Tailwind CSS working via CDN (no build)
+- [x] Landing page displays at root URL
+- [x] Hero section with French copy and CTAs
+- [x] Feature cards section (3 cards)
+- [x] Page is mobile-responsive
+- [x] Base layout template created and reusable
+- [x] Git repository initialized and pushed to GitHub
+- [x] Code follows PSR-12 and Laravel conventions
+- [x] No console errors in browser
 
 ---
 
@@ -257,3 +257,46 @@ darts-community/
 *Story créée le 2026-01-09*
 *Epic: Foundation & Authentication*
 *Sprint: 1*
+
+---
+
+## Dev Agent Record
+
+### Implementation Notes
+- Initialized Laravel 12.46.0 with PHP 8.4.12 via Laravel Herd
+- Used Tailwind CSS Play CDN to avoid build process complexity
+- Implemented hero section with dartboard-inspired concentric circles as background pattern
+- Feature cards use emoji icons for visual appeal without external dependencies
+- All buttons have min-height of 56px (44px+ touch target requirement)
+- Responsive breakpoints: mobile (<640px), tablet (640-1024px), desktop (>1024px)
+- Tests cover all AC requirements with 9 passing tests
+
+### Debug Log
+- Initial attempt with PHP 8.3 failed due to Laravel 12 requiring PHP 8.4+
+- Resolved by using PHP 8.4.12 from Herd installation
+
+### Completion Notes
+Implementation complete. All 7 tasks done, all 7 acceptance criteria satisfied. 9 feature tests passing. Story ready for code review.
+
+---
+
+## File List
+
+### New Files
+- `darts-community/` - Complete Laravel 12.46.0 project
+- `darts-community/resources/views/layouts/app.blade.php` - Base layout with Tailwind CDN
+- `darts-community/resources/views/pages/home.blade.php` - Landing page
+- `darts-community/routes/web.php` - Updated with home route
+- `darts-community/tests/Feature/LandingPageTest.php` - Feature tests for landing page
+
+### Modified Files
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` - Status updated to in-progress → review
+- `_bmad-output/implementation-artifacts/1-1-project-setup-landing-page.md` - This file
+
+---
+
+## Change Log
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-01-09 | Story implementation complete - Laravel 12 project with landing page | Claude Opus 4.5 |
