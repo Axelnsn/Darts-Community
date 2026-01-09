@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PlayerProfileController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfilePhotoController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/player/profile/edit', [PlayerProfileController::class, 'edit'])->name('player.profile.edit');
     Route::put('/player/profile', [PlayerProfileController::class, 'update'])->name('player.profile.update');
     Route::get('/player/profile', [PlayerProfileController::class, 'show'])->name('player.profile.show');
+
+    // Player profile photo routes
+    Route::post('/player/profile/photo', [ProfilePhotoController::class, 'store'])->name('player.profile.photo.store');
+    Route::delete('/player/profile/photo/{type}', [ProfilePhotoController::class, 'destroy'])->name('player.profile.photo.destroy');
 
     // Settings routes
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
