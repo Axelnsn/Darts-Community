@@ -4,6 +4,7 @@ use App\Http\Controllers\PlayerProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfilePhotoController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\WalkonSongController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('pages.home'))->name('home');
@@ -30,6 +31,10 @@ Route::middleware('auth')->group(function () {
     // Player profile photo routes
     Route::post('/player/profile/photo', [ProfilePhotoController::class, 'store'])->name('player.profile.photo.store');
     Route::delete('/player/profile/photo/{type}', [ProfilePhotoController::class, 'destroy'])->name('player.profile.photo.destroy');
+
+    // Walk-on song routes
+    Route::post('/player/profile/walkon', [WalkonSongController::class, 'store'])->name('player.profile.walkon.store');
+    Route::delete('/player/profile/walkon', [WalkonSongController::class, 'destroy'])->name('player.profile.walkon.destroy');
 
     // Settings routes
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');

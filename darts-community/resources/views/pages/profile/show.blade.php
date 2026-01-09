@@ -83,6 +83,9 @@
                             </div>
                         </dl>
 
+                        <!-- Walk-on Song -->
+                        <x-profile.walkon-player :player="$player" class="mt-6 border-t border-gray-200 pt-6" />
+
                         <!-- Profile Completeness Hint -->
                         @php
                             $filledFields = collect([

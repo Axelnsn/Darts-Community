@@ -148,6 +148,123 @@
                 </div>
             </div>
 
+            <!-- Walk-on Song Section -->
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    <section x-data="{ songType: '{{ old('walkon_song_type', $player->walkon_song_type?->value ?? 'youtube') }}' }">
+                        <header>
+                            <h2 class="text-lg font-medium text-gray-900">
+                                Walk-on Song
+                            </h2>
+                            <p class="mt-1 text-sm text-gray-600">
+                                Choisissez votre musique d'entrée comme les joueurs professionnels.
+                            </p>
+                        </header>
+
+                        <div class="mt-6">
+                            <!-- Tab Selection -->
+                            <div class="flex space-x-4 mb-4">
+                                <button type="button"
+                                    @click="songType = 'youtube'"
+                                    :class="songType === 'youtube' ? 'bg-dart-green text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                                    class="px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                                    YouTube
+                                </button>
+                                <button type="button"
+                                    @click="songType = 'spotify'"
+                                    :class="songType === 'spotify' ? 'bg-dart-green text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                                    class="px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                                    Spotify
+                                </button>
+                                <button type="button"
+                                    @click="songType = 'mp3'"
+                                    :class="songType === 'mp3' ? 'bg-dart-green text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                                    class="px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                                    MP3
+                                </button>
+                            </div>
+
+                            <!-- Current Song Preview -->
+                            @if($player->walkon_song_type)
+                                <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+                                    <p class="text-sm text-gray-600 mb-2">Musique actuelle :</p>
+                                    <x-profile.walkon-player :player="$player" />
+                                </div>
+                            @endif
+
+                            <!-- YouTube Form -->
+                            <form x-show="songType === 'youtube'" method="post" action="{{ route('player.profile.walkon.store') }}" class="space-y-4">
+                                @csrf
+                                <input type="hidden" name="walkon_song_type" value="youtube">
+                                <div>
+                                    <x-input-label for="youtube_url" value="URL YouTube" />
+                                    <x-text-input id="youtube_url" name="walkon_song_url" type="url" class="mt-1 block w-full"
+                                        placeholder="https://www.youtube.com/watch?v=..."
+                                        :value="old('walkon_song_url', $player->walkon_song_type?->value === 'youtube' ? $player->walkon_song_url : '')" />
+                                    <x-input-error class="mt-2" :messages="$errors->get('walkon_song_url')" />
+                                    <p class="mt-1 text-sm text-gray-500">Ex: https://www.youtube.com/watch?v=dQw4w9WgXcQ</p>
+                                </div>
+                                <x-primary-button>Enregistrer</x-primary-button>
+                            </form>
+
+                            <!-- Spotify Form -->
+                            <form x-show="songType === 'spotify'" method="post" action="{{ route('player.profile.walkon.store') }}" class="space-y-4">
+                                @csrf
+                                <input type="hidden" name="walkon_song_type" value="spotify">
+                                <div>
+                                    <x-input-label for="spotify_url" value="URL Spotify" />
+                                    <x-text-input id="spotify_url" name="walkon_song_url" type="url" class="mt-1 block w-full"
+                                        placeholder="https://open.spotify.com/track/..."
+                                        :value="old('walkon_song_url', $player->walkon_song_type?->value === 'spotify' ? $player->walkon_song_url : '')" />
+                                    <x-input-error class="mt-2" :messages="$errors->get('walkon_song_url')" />
+                                    <p class="mt-1 text-sm text-gray-500">Ex: https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT</p>
+                                </div>
+                                <x-primary-button>Enregistrer</x-primary-button>
+                            </form>
+
+                            <!-- MP3 Form -->
+                            <form x-show="songType === 'mp3'" method="post" action="{{ route('player.profile.walkon.store') }}" enctype="multipart/form-data" class="space-y-4">
+                                @csrf
+                                <input type="hidden" name="walkon_song_type" value="mp3">
+                                <div>
+                                    <x-input-label for="walkon_file" value="Fichier MP3" />
+                                    <input type="file" id="walkon_file" name="walkon_song_file" accept="audio/mpeg,audio/mp3"
+                                        class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-dart-green file:text-white hover:file:bg-dart-green/90 cursor-pointer" />
+                                    <x-input-error class="mt-2" :messages="$errors->get('walkon_song_file')" />
+                                    <p class="mt-1 text-sm text-gray-500">Max 10 Mo, durée max 2 minutes</p>
+                                </div>
+                                <x-primary-button>Enregistrer</x-primary-button>
+                            </form>
+
+                            <!-- Delete Button -->
+                            @if($player->walkon_song_type)
+                                <form method="post" action="{{ route('player.profile.walkon.destroy') }}" class="mt-4 pt-4 border-t border-gray-200">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md shadow-sm text-sm font-medium text-red-700 bg-white hover:bg-red-50">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        Supprimer la musique
+                                    </button>
+                                </form>
+                            @endif
+
+                            @if (session('status') === 'walkon-updated')
+                                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="mt-2 text-sm text-green-600">
+                                    Musique mise à jour.
+                                </p>
+                            @endif
+                            @if (session('status') === 'walkon-deleted')
+                                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="mt-2 text-sm text-green-600">
+                                    Musique supprimée.
+                                </p>
+                            @endif
+                        </div>
+                    </section>
+                </div>
+            </div>
+
             <!-- Profile Info Section -->
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
