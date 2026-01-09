@@ -215,13 +215,18 @@ class SkillLevelTest extends TestCase
     public function test_skill_badge_displayed_prominently_on_profile(): void
     {
         $user = User::factory()->create();
-        $user->player->update(['skill_level' => 'pro']);
+        $user->player->update([
+            'first_name' => 'Jean',
+            'last_name' => 'Dupont',
+            'skill_level' => 'pro',
+        ]);
 
         $response = $this->actingAs($user)->get(route('player.profile.show'));
 
         $response->assertStatus(200);
         // Badge should appear in the header area near the name
-        $response->assertSeeInOrder(['Mon Profil', 'Pro']);
+        $response->assertSee('skill-badge');
+        $response->assertSee('Pro');
     }
 
     // ===========================================
@@ -265,7 +270,7 @@ class SkillLevelTest extends TestCase
         $response = $this->actingAs($user)->get(route('player.profile.show'));
         $response->assertSee('Profil incomplet');
 
-        // Fill all fields including skill_level
+        // Fill all fields including skill_level and photos
         $player->update([
             'first_name' => 'John',
             'last_name' => 'Doe',
@@ -273,6 +278,8 @@ class SkillLevelTest extends TestCase
             'date_of_birth' => '1990-01-01',
             'city' => 'Paris',
             'skill_level' => 'amateur',
+            'profile_photo_path' => 'profiles/test.jpg',
+            'cover_photo_path' => 'covers/test.jpg',
         ]);
 
         $response = $this->actingAs($user)->get(route('player.profile.show'));

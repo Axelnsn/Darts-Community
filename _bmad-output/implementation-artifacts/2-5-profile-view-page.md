@@ -1,6 +1,6 @@
 # Story 2.5: Profile View Page
 
-## Status: ready-for-dev
+## Status: review
 
 ## Story
 
@@ -22,26 +22,26 @@
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create Profile View Route & Controller (AC: 1, 9)
-  - [ ] Add `GET /profile` route
-  - [ ] Add show method to ProfileController
-  - [ ] Add "Modifier" button for owner
+- [x] Task 1: Create Profile View Route & Controller (AC: 1, 9)
+  - [x] Add `GET /profile` route
+  - [x] Add show method to ProfileController
+  - [x] Add "Modifier" button for owner
 
-- [ ] Task 2: Create Profile View Template (AC: 2, 3, 4, 7)
-  - [ ] Create `resources/views/pages/profile/show.blade.php`
-  - [ ] Add cover photo as header banner
-  - [ ] Add profile photo as avatar overlay
-  - [ ] Display name, nickname, city
-  - [ ] Use card components for sections
+- [x] Task 2: Create Profile View Template (AC: 2, 3, 4, 7)
+  - [x] Create `resources/views/pages/profile/show.blade.php`
+  - [x] Add cover photo as header banner
+  - [x] Add profile photo as avatar overlay
+  - [x] Display name, nickname, city
+  - [x] Use card components for sections
 
-- [ ] Task 3: Integrate Components (AC: 5, 6)
-  - [ ] Include skill-badge component
-  - [ ] Include walkon-player component
+- [x] Task 3: Integrate Components (AC: 5, 6)
+  - [x] Include skill-badge component
+  - [x] Include walkon-player component
 
-- [ ] Task 4: Responsive Design (AC: 8)
-  - [ ] Ensure mobile-first layout
-  - [ ] Test on various screen sizes
-  - [ ] Adjust card layout for mobile
+- [x] Task 4: Responsive Design (AC: 8)
+  - [x] Ensure mobile-first layout
+  - [x] Test on various screen sizes
+  - [x] Adjust card layout for mobile
 
 ## Dev Notes
 
@@ -73,7 +73,7 @@
 
 ### Testing
 
-**Test Location:** `tests/Feature/Profile/ProfileViewTest.php`
+**Test Location:** `tests/Feature/Profile/ProfileShowTest.php`
 
 ### Dependencies
 
@@ -85,17 +85,34 @@
 ## Dev Agent Record
 
 ### Implementation Plan
-*À compléter lors du développement*
+La story 2.5 implémente une page de visualisation du profil joueur avec:
+- Cover photo en banner header avec gradient par défaut
+- Avatar overlay positionné en bas du banner
+- Affichage du nom, pseudo et ville avec icône de localisation
+- Badge de niveau intégré à côté du nom
+- Lecteur walk-on song dans une carte dédiée
+- Layout responsive avec Tailwind (mobile-first)
+- Bouton "Modifier" accessible depuis la page
 
 ### Debug Log
-*À compléter lors du développement*
+- Correction du test `test_profile_shows_skill_badge_when_set`: utilisation de `SkillLevel::CONFIRME` au lieu de `SkillLevel::Intermediate`
+- Correction du test `test_profile_completeness_includes_skill_level`: ajout des champs photo dans le calcul de complétion (8 champs au total)
+- Correction du test `test_skill_badge_displayed_prominently_on_profile`: suppression de la dépendance au header "Mon Profil" qui n'existe plus dans le nouveau layout
 
 ### Completion Notes
-*À compléter lors du développement*
+Implémentation complète de la page de visualisation du profil avec:
+- Layout moderne avec cover photo et avatar overlay
+- Affichage conditionnel des composants (skill-badge, walkon-player)
+- Barre de progression de complétion du profil améliorée (inclut photos)
+- Design responsive avec breakpoints sm/lg
+- 13 tests unitaires et d'intégration couvrant tous les AC
+- Tous les 212 tests du projet passent sans régression
 
 ## File List
 
-*À compléter lors du développement*
+- `darts-community/resources/views/pages/profile/show.blade.php` (modified)
+- `darts-community/tests/Feature/Profile/ProfileShowTest.php` (modified)
+- `darts-community/tests/Feature/Profile/SkillLevelTest.php` (modified)
 
 ## Change Log
 
@@ -103,3 +120,4 @@
 |------|---------|-------------|--------|
 | 2026-01-08 | 1.0 | Initial story creation from PRD | Sarah (PO) |
 | 2026-01-09 | 1.1 | Story prepared for development | Claude |
+| 2026-01-09 | 2.0 | Implementation complete - profile view with cover/avatar/cards | Dev Agent (Amelia) |
