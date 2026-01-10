@@ -15,6 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Seed federations and clubs
+        $this->call([
+            FederationSeeder::class,
+            ClubSeeder::class,
+        ]);
+
         // User::factory(10)->create();
 
         User::factory()->create([
