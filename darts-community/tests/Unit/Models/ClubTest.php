@@ -125,4 +125,27 @@ class ClubTest extends TestCase
         $player->refresh();
         $this->assertNull($player->club_id);
     }
+
+    /**
+     * Test scope active filters inactive clubs.
+     */
+    public function test_scope_active_filters_inactive_clubs(): void
+    {
+        // Create 3 active clubs
+        Club::factory()->count(3)->create(['is_active' => true]);
+
+        // Create 2 inactive clubs
+        Club::factory()->count(2)->create(['is_active' => false]);
+
+        // Query using active scope
+        $activeClubs = Club::active()->get();
+
+        // Assert only 3 active clubs are returned
+        $this->assertCount(3, $activeClubs);
+
+        // Assert all returned clubs are active
+        foreach ($activeClubs as $club) {
+            $this->assertTrue($club->is_active);
+        }
+    }
 }

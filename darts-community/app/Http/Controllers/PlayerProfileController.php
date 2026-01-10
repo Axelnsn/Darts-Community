@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PlayerProfileUpdateRequest;
+use App\Models\Club;
 use App\Services\PlayerService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,9 +23,13 @@ class PlayerProfileController extends Controller
     {
         $player = $this->playerService->createForUserIfNotExists($request->user());
 
+        // Load active clubs ordered by name for club selection dropdown
+        $clubs = Club::active()->orderBy('name')->get();
+
         return view('pages.profile.edit', [
             'user' => $request->user(),
             'player' => $player,
+            'clubs' => $clubs,
         ]);
     }
 
@@ -46,6 +51,9 @@ class PlayerProfileController extends Controller
     public function show(Request $request): View
     {
         $player = $this->playerService->createForUserIfNotExists($request->user());
+
+        // Eager load club to avoid N+1 query
+        $player->load('club');
 
         return view('pages.profile.show', [
             'user' => $request->user(),

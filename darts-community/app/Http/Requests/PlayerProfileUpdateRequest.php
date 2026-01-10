@@ -30,6 +30,7 @@ class PlayerProfileUpdateRequest extends FormRequest
             'date_of_birth' => ['nullable', 'date', 'before:today', 'after:' . now()->subYears(120)->format('Y-m-d')],
             'city' => ['nullable', 'string', 'max:255'],
             'skill_level' => ['nullable', Rule::enum(SkillLevel::class)],
+            'club_id' => ['nullable', 'exists:clubs,id'],
         ];
     }
 
@@ -49,6 +50,7 @@ class PlayerProfileUpdateRequest extends FormRequest
             'date_of_birth.after' => 'La date de naissance n\'est pas valide.',
             'city.max' => 'La ville ne peut pas dépasser 255 caractères.',
             'skill_level.enum' => 'Le niveau de jeu sélectionné n\'est pas valide.',
+            'club_id.exists' => 'Le club sélectionné n\'existe pas.',
         ];
     }
 
@@ -66,6 +68,7 @@ class PlayerProfileUpdateRequest extends FormRequest
             'date_of_birth' => 'date de naissance',
             'city' => 'ville',
             'skill_level' => 'niveau de jeu',
+            'club_id' => 'club',
         ];
     }
 }

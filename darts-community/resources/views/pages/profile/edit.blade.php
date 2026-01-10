@@ -314,6 +314,26 @@
                             </div>
 
                             <div>
+                                <x-input-label for="club_id" value="Club" />
+                                <select
+                                    id="club_id"
+                                    name="club_id"
+                                    class="mt-1 block w-full border-gray-300 focus:border-dart-green focus:ring-dart-green rounded-md shadow-sm"
+                                >
+                                    <option value="">Sans club</option>
+                                    @foreach($clubs as $club)
+                                        <option
+                                            value="{{ $club->id }}"
+                                            @selected(old('club_id', $player->club_id) == $club->id)
+                                        >
+                                            {{ $club->name }}@if($club->city) - {{ $club->city }}@endif
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('club_id')" />
+                            </div>
+
+                            <div>
                                 <x-input-label for="skill_level" value="Niveau de jeu" />
                                 <select id="skill_level" name="skill_level" class="mt-1 block w-full border-gray-300 focus:border-dart-green focus:ring-dart-green rounded-md shadow-sm">
                                     <option value="">Sélectionnez votre niveau</option>

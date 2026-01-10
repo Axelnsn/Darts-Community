@@ -71,4 +71,15 @@ class Club extends Model
     {
         return $this->hasMany(Player::class);
     }
+
+    /**
+     * Scope a query to only include active clubs.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }

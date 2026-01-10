@@ -144,6 +144,33 @@
                         </div>
                     @endif
 
+                    <!-- Affiliation Card -->
+                    <div class="profile-card bg-gray-50 rounded-lg p-6 border border-gray-100">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-dart-green" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Affiliation" role="img">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            Affiliation
+                        </h3>
+                        <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+                            <div>
+                                <dt class="text-sm font-medium text-gray-500">Club</dt>
+                                <dd class="mt-1 text-sm text-gray-900">
+                                    @if($player->club)
+                                        <a href="#" class="text-dart-green hover:underline">
+                                            {{ $player->club->name }}
+                                        </a>
+                                        @if($player->club->city)
+                                            <span class="text-gray-500"> - {{ $player->club->city }}</span>
+                                        @endif
+                                    @else
+                                        Sans club
+                                    @endif
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+
                     <!-- Profile Completeness Hint -->
                     @php
                         $percentage = $player->getCompletenessPercentage();
