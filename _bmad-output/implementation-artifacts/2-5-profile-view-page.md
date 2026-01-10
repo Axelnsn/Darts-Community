@@ -1,6 +1,6 @@
 # Story 2.5: Profile View Page
 
-## Status: review
+## Status: done
 
 ## Story
 
@@ -23,7 +23,7 @@
 ## Tasks / Subtasks
 
 - [x] Task 1: Create Profile View Route & Controller (AC: 1, 9)
-  - [x] Add `GET /profile` route
+  - [x] Add `GET /player/profile` route
   - [x] Add show method to ProfileController
   - [x] Add "Modifier" button for owner
 
@@ -42,6 +42,21 @@
   - [x] Ensure mobile-first layout
   - [x] Test on various screen sizes
   - [x] Adjust card layout for mobile
+
+## Review Follow-ups (AI Code Review)
+
+### Issues Fixed (7 items - version 2.1)
+- [x] [AI-Review][HIGH] Git vs Story File List discrepancy - Added missing files to File List
+- [x] [AI-Review][HIGH] Route documentation error - Corrected `/profile` to `/player/profile` in Task 1
+- [x] [AI-Review][MEDIUM] City display missing fallback - Added "Ville non renseignée" for consistency
+- [x] [AI-Review][HIGH] Missing responsive design tests - Added 5 tests for AC8 validation [ProfileShowTest.php:164-215]
+- [x] [AI-Review][MEDIUM] Hardcoded i18n strings - Added TODO comment for future extraction [show.blade.php:1]
+- [x] [AI-Review][MEDIUM] Profile completeness logic untested - Added 3 tests for percentage calculation [ProfileShowTest.php:217-271]
+- [x] [AI-Review][MEDIUM] Uncommitted git changes - Created .gitignore for Claude settings
+
+### Additional Improvements (2 items - version 2.2)
+- [x] [AI-Review][LOW] Magic number extracted to Player model - Added getCompletableFields() and getCompletenessPercentage() methods [Player.php:62-87, show.blade.php:149]
+- [x] [AI-Review][LOW] Accessibility improved - Added aria-label and role attributes to all SVG icons [show.blade.php:13,22,44,66,85,138,155]
 
 ## Dev Notes
 
@@ -110,9 +125,13 @@ Implémentation complète de la page de visualisation du profil avec:
 
 ## File List
 
+- `darts-community/app/Models/Player.php` (modified)
 - `darts-community/resources/views/pages/profile/show.blade.php` (modified)
 - `darts-community/tests/Feature/Profile/ProfileShowTest.php` (modified)
 - `darts-community/tests/Feature/Profile/SkillLevelTest.php` (modified)
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` (modified)
+- `_bmad-output/implementation-artifacts/2-5-profile-view-page.md` (modified)
+- `.gitignore` (created)
 
 ## Change Log
 
@@ -121,3 +140,5 @@ Implémentation complète de la page de visualisation du profil avec:
 | 2026-01-08 | 1.0 | Initial story creation from PRD | Sarah (PO) |
 | 2026-01-09 | 1.1 | Story prepared for development | Claude |
 | 2026-01-09 | 2.0 | Implementation complete - profile view with cover/avatar/cards | Dev Agent (Amelia) |
+| 2026-01-10 | 2.1 | Code review fixes: File List updated, route doc corrected, city fallback, responsive tests, i18n TODO, completeness tests | Review Agent |
+| 2026-01-10 | 2.2 | LOW priority improvements: Magic number extraction (Player methods), accessibility attributes (SVG aria-label) | Review Agent |

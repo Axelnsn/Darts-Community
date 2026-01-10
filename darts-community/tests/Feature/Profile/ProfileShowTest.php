@@ -160,4 +160,113 @@ class ProfileShowTest extends TestCase
         // Should show placeholder or empty state for missing fields
         $response->assertSee('Non renseigné');
     }
+
+    // AC8: Mobile-responsive design tests
+    public function test_profile_has_responsive_layout_classes(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/player/profile');
+
+        // Check for responsive padding classes
+        $response->assertSee('py-6 sm:py-12', false);
+        $response->assertSee('px-4 sm:px-6 lg:px-8', false);
+    }
+
+    public function test_profile_cover_has_responsive_height(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/player/profile');
+
+        // Cover should have mobile (h-48) and desktop (sm:h-64) heights
+        $response->assertSee('h-48 sm:h-64', false);
+    }
+
+    public function test_profile_avatar_has_responsive_sizing(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/player/profile');
+
+        // Avatar should have mobile (w-32 h-32) and desktop (sm:w-40 sm:h-40) sizes
+        $response->assertSee('w-32 h-32 sm:w-40 sm:h-40', false);
+    }
+
+    public function test_profile_layout_flexbox_responsive(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/player/profile');
+
+        // Layout should stack on mobile (flex-col) and row on desktop (sm:flex-row)
+        $response->assertSee('flex-col sm:flex-row', false);
+    }
+
+    public function test_profile_grid_responsive(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/player/profile');
+
+        // Grid should be 1 column on mobile, 2 on desktop
+        $response->assertSee('grid-cols-1', false);
+        $response->assertSee('sm:grid-cols-2', false);
+    }
+
+    // Profile Completeness Calculation Tests
+    public function test_profile_completeness_calculates_percentage_correctly(): void
+    {
+        $user = User::factory()->create();
+
+        // Empty profile should be 0%
+        $response = $this->actingAs($user)->get('/player/profile');
+        $response->assertSee('Profil incomplet (0%)');
+
+        // Fill 4 out of 8 fields = 50%
+        $user->player->update([
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'nickname' => 'JD',
+            'city' => 'Paris',
+        ]);
+
+        $response = $this->actingAs($user)->get('/player/profile');
+        $response->assertSee('Profil incomplet (50%)');
+    }
+
+    public function test_profile_completeness_shows_progress_bar(): void
+    {
+        $user = User::factory()->create();
+        $user->player->update([
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'city' => 'Paris',
+        ]);
+
+        $response = $this->actingAs($user)->get('/player/profile');
+
+        // Should show progress bar with width style
+        $response->assertSee('width: 38%', false); // 3/8 = 37.5% rounded to 38%
+    }
+
+    public function test_profile_completeness_hides_when_100_percent(): void
+    {
+        $user = User::factory()->create();
+        $user->player->update([
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'nickname' => 'JD',
+            'date_of_birth' => '1990-01-01',
+            'city' => 'Paris',
+            'skill_level' => 'amateur',
+            'profile_photo_path' => 'profiles/test.jpg',
+            'cover_photo_path' => 'covers/test.jpg',
+        ]);
+
+        $response = $this->actingAs($user)->get('/player/profile');
+
+        // Should NOT show incomplete profile hint
+        $response->assertDontSee('Profil incomplet');
+    }
 }

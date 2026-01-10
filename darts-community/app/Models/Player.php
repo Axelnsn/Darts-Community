@@ -53,4 +53,36 @@ class Player extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the list of fields used to calculate profile completeness.
+     *
+     * @return array<string>
+     */
+    public function getCompletableFields(): array
+    {
+        return [
+            'first_name',
+            'last_name',
+            'nickname',
+            'date_of_birth',
+            'city',
+            'skill_level',
+            'profile_photo_path',
+            'cover_photo_path',
+        ];
+    }
+
+    /**
+     * Calculate the profile completeness percentage.
+     *
+     * @return int Percentage from 0 to 100
+     */
+    public function getCompletenessPercentage(): int
+    {
+        $fields = $this->getCompletableFields();
+        $filledCount = collect($fields)->filter(fn($field) => !empty($this->$field))->count();
+
+        return round(($filledCount / count($fields)) * 100);
+    }
 }
