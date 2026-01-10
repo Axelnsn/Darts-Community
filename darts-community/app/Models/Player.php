@@ -19,6 +19,8 @@ class Player extends Model
      */
     protected $fillable = [
         'user_id',
+        'club_id',
+        'federation_id',
         'first_name',
         'last_name',
         'nickname',
@@ -52,6 +54,22 @@ class Player extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the club that the player belongs to.
+     */
+    public function club(): BelongsTo
+    {
+        return $this->belongsTo(Club::class);
+    }
+
+    /**
+     * Get the federation that the player belongs to.
+     */
+    public function federation(): BelongsTo
+    {
+        return $this->belongsTo(Federation::class);
     }
 
     /**

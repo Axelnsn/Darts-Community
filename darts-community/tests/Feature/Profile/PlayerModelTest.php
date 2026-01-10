@@ -22,6 +22,8 @@ class PlayerModelTest extends TestCase
 
         $expectedFillable = [
             'user_id',
+            'club_id',
+            'federation_id',
             'first_name',
             'last_name',
             'nickname',
