@@ -20,7 +20,7 @@ class FederationFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company() . ' Darts Federation',
+            'name' => substr(fake()->company(), 0, 230) . ' Darts Federation', // Max 255 chars, leave room for suffix
             'code' => fake()->unique()->regexify('[A-Z]{3}'),
             'country' => fake()->country(),
         ];

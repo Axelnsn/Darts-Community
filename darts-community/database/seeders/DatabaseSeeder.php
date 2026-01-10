@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Seed federations and clubs
+        // Note: WithoutModelEvents trait affects all code in this run() method
         $this->call([
             FederationSeeder::class,
             ClubSeeder::class,
@@ -23,6 +24,8 @@ class DatabaseSeeder extends Seeder
 
         // User::factory(10)->create();
 
+        // Note: This User creation benefits from WithoutModelEvents
+        // (prevents duplicate Player creation since UserObserver will be disabled)
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',

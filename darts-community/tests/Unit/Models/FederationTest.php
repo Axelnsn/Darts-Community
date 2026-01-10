@@ -71,4 +71,53 @@ class FederationTest extends TestCase
         $this->expectException(\Illuminate\Database\QueryException::class);
         Federation::factory()->create(['code' => 'FFD']);
     }
+
+    /**
+     * Test federation code must be exactly 3 uppercase letters.
+     */
+    public function test_federation_code_must_be_three_uppercase_letters(): void
+    {
+        // Valid codes should work
+        $federation = Federation::create([
+            'name' => 'Test Federation',
+            'code' => 'ABC',
+            'country' => 'France',
+        ]);
+        $this->assertEquals('ABC', $federation->code);
+
+        // Test invalid formats
+        $invalidCodes = [
+            'ab',      // Too short
+            'ABCD',    // Too long
+            'abc',     // Lowercase
+            'Ab1',     // Contains number
+            'A-B',     // Contains special char
+            '123',     // All numbers
+        ];
+
+        foreach ($invalidCodes as $invalidCode) {
+            $this->expectException(\InvalidArgumentException::class);
+            Federation::create([
+                'name' => 'Test Federation',
+                'code' => $invalidCode,
+                'country' => 'France',
+            ]);
+        }
+    }
+
+    /**
+     * Test federation code validation on update.
+     */
+    public function test_federation_code_validation_on_update(): void
+    {
+        $federation = Federation::factory()->create(['code' => 'ABC']);
+
+        // Valid update should work
+        $federation->update(['code' => 'XYZ']);
+        $this->assertEquals('XYZ', $federation->code);
+
+        // Invalid update should fail
+        $this->expectException(\InvalidArgumentException::class);
+        $federation->update(['code' => 'invalid']);
+    }
 }

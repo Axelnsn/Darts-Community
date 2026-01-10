@@ -21,7 +21,7 @@ class ClubFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company() . ' Darts Club',
+            'name' => substr(fake()->company(), 0, 240) . ' Darts Club', // Max 255 chars, leave room for suffix
             'city' => fake()->city(),
             'federation_id' => Federation::factory(),
             'is_active' => true,

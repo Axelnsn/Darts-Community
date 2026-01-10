@@ -17,8 +17,9 @@ class ClubSeeder extends Seeder
         $ffd = Federation::where('code', 'FFD')->first();
 
         if (!$ffd) {
-            $this->command->warn('FFD Federation not found. Run FederationSeeder first.');
-            return;
+            throw new \RuntimeException(
+                'FFD Federation not found. Please run FederationSeeder before ClubSeeder.'
+            );
         }
 
         // Create sample French darts clubs

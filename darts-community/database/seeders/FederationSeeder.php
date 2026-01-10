@@ -13,6 +13,8 @@ class FederationSeeder extends Seeder
     public function run(): void
     {
         // Create the French Darts Federation (FFD)
+        // Note: FederationObserver validates code format (3 uppercase letters)
+        // When called from DatabaseSeeder, WithoutModelEvents will disable this validation
         Federation::create([
             'name' => 'Fédération Française de Darts',
             'code' => 'FFD',

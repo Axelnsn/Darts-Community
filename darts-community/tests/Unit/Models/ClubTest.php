@@ -83,4 +83,46 @@ class ClubTest extends TestCase
 
         $this->assertTrue($club->is_active);
     }
+
+    /**
+     * Test that deleting a federation sets club federation_id to null (nullOnDelete).
+     */
+    public function test_federation_delete_sets_club_federation_id_to_null(): void
+    {
+        $federation = Federation::factory()->create();
+        $club = Club::factory()->create(['federation_id' => $federation->id]);
+
+        $this->assertNotNull($club->federation_id);
+        $this->assertEquals($federation->id, $club->federation_id);
+
+        // Delete the federation
+        $federation->delete();
+
+        // Refresh club and verify federation_id is now null
+        $club->refresh();
+        $this->assertNull($club->federation_id);
+    }
+
+    /**
+     * Test that deleting a club sets player club_id to null (nullOnDelete).
+     */
+    public function test_club_delete_sets_player_club_id_to_null(): void
+    {
+        $club = Club::factory()->create();
+
+        // Create a user with a player (via observer) and assign to club
+        $user = \App\Models\User::factory()->create();
+        $player = $user->player;
+        $player->update(['club_id' => $club->id]);
+
+        $this->assertNotNull($player->club_id);
+        $this->assertEquals($club->id, $player->club_id);
+
+        // Delete the club
+        $club->delete();
+
+        // Refresh player and verify club_id is now null
+        $player->refresh();
+        $this->assertNull($player->club_id);
+    }
 }

@@ -1,6 +1,6 @@
 # Story 3.1: Club & Federation Data Models
 
-Status: review
+Status: in-progress
 
 ## Story
 
@@ -53,6 +53,18 @@ Status: review
   - [x] Unit tests for Club model relationships
   - [x] Unit tests for Player model club/federation relationships
   - [x] Feature tests for seeders (data exists)
+
+### Review Follow-ups (AI Code Review - 2026-01-10)
+
+- [x] [AI-Review][HIGH] Add migration rollback tests - Task 5 claims "Test migrations rollback" but no tests verify actual rollback behavior [tests/Feature/Database/MigrationTest.php] **FIXED:** Created comprehensive MigrationTest.php with 4 rollback tests
+- [x] [AI-Review][HIGH] Review mass assignment security before Story 3.2 - Federation and Club models have all fields fillable without $guarded, ensure Form Requests used in future endpoints [app/Models/Federation.php:18-22, app/Models/Club.php:19-24] **FIXED:** Added detailed documentation comments explaining mass assignment security strategy
+- [x] [AI-Review][MEDIUM] Add casts() method to Federation for consistency - Club uses protected function casts() but Federation doesn't, breaks pattern consistency [app/Models/Federation.php] **FIXED:** Added empty casts() method to Federation model
+- [x] [AI-Review][MEDIUM] Add class-level DocBlocks with @property tags - Missing on Federation and Club models for IDE autocomplete [app/Models/Federation.php, app/Models/Club.php] **FIXED:** Added comprehensive DocBlocks with @property tags for all attributes and relationships
+- [x] [AI-Review][MEDIUM] Improve ClubSeeder error handling - Currently warns and returns silently if FFD missing, should throw exception [database/seeders/ClubSeeder.php:19-22] **FIXED:** Changed to throw RuntimeException instead of warn+return
+- [x] [AI-Review][MEDIUM] Add tests for cascade delete behavior - Migration uses nullOnDelete() but no tests verify it works [tests/Unit/Models/] **FIXED:** Added 2 cascade delete tests to ClubTest.php
+- [x] [AI-Review][MEDIUM] Fix Factories potential string overflow - fake()->company() could generate names > 255 chars [database/factories/FederationFactory.php:23, database/factories/ClubFactory.php:24] **FIXED:** Added substr() to limit company name length in both factories
+- [x] [AI-Review][MEDIUM] Add model-level validation for Federation code - Code should validate format (3 uppercase letters) using Model Events or Observer [app/Models/Federation.php] **FIXED:** Created FederationObserver with code format validation, registered in AppServiceProvider, added 2 validation tests
+- [x] [AI-Review][MEDIUM] Review DatabaseSeeder WithoutModelEvents scope - Trait used but seeders called outside its scope, may cause issues with future Model Events [database/seeders/DatabaseSeeder.php:11-22] **FIXED:** Added clarifying comments documenting the WithoutModelEvents behavior and its impact on observers
 
 ## Dev Notes
 
@@ -227,6 +239,14 @@ N/A - Implementation completed without major debugging issues
 
 **Models Modified:**
 - app/Models/Player.php
+- app/Models/Federation.php (Code review fixes: DocBlocks, casts(), mass assignment docs)
+- app/Models/Club.php (Code review fixes: DocBlocks, mass assignment docs)
+
+**Observers Created:**
+- app/Observers/FederationObserver.php (Code validation for federation code format)
+
+**Providers Modified:**
+- app/Providers/AppServiceProvider.php (Registered FederationObserver)
 
 **Migrations Created:**
 - database/migrations/2026_01_10_000001_create_federations_table.php
@@ -237,21 +257,30 @@ N/A - Implementation completed without major debugging issues
 - database/factories/FederationFactory.php
 - database/factories/ClubFactory.php
 
+**Factories Modified:**
+- database/factories/FederationFactory.php (Code review fix: string overflow prevention)
+- database/factories/ClubFactory.php (Code review fix: string overflow prevention)
+
 **Seeders Created:**
 - database/seeders/FederationSeeder.php
 - database/seeders/ClubSeeder.php
 
 **Seeders Modified:**
-- database/seeders/DatabaseSeeder.php
+- database/seeders/DatabaseSeeder.php (Code review fix: WithoutModelEvents documentation)
+- database/seeders/FederationSeeder.php (Code review fix: Observer documentation)
+- database/seeders/ClubSeeder.php (Code review fix: Exception instead of warn)
 
 **Tests Created:**
 - tests/Unit/Models/FederationTest.php
 - tests/Unit/Models/ClubTest.php
 - tests/Unit/Models/PlayerRelationshipsTest.php
 - tests/Feature/Database/SeederTest.php
+- tests/Feature/Database/MigrationTest.php (Code review: migration rollback tests)
 
 **Tests Modified:**
 - tests/Feature/Profile/PlayerModelTest.php
+- tests/Unit/Models/FederationTest.php (Code review: added code validation tests)
+- tests/Unit/Models/ClubTest.php (Code review: added cascade delete tests)
 
 ## Change Log
 
@@ -260,3 +289,5 @@ N/A - Implementation completed without major debugging issues
 | 2026-01-08 | 1.0 | Initial story creation from PRD | Sarah (PO) |
 | 2026-01-10 | 2.0 | Ultimate context engine analysis - comprehensive developer guide created | Claude (SM Agent) |
 | 2026-01-10 | 3.0 | Story implementation completed - All ACs satisfied, 23 tests added, all passing | Claude (Dev Agent) |
+| 2026-01-10 | 3.1 | Code review completed - 9 action items added (2 HIGH, 7 MEDIUM), story moved to in-progress | Claude (Code Review Agent) |
+| 2026-01-10 | 4.0 | Code review fixes completed - All 9 issues resolved (2 HIGH + 7 MEDIUM), added MigrationTest.php (4 tests), FederationObserver with validation, enhanced documentation, 6 new tests total | Claude (Dev Agent) |
