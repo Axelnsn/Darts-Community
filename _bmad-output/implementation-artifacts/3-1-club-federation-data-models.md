@@ -1,6 +1,6 @@
 # Story 3.1: Club & Federation Data Models
 
-Status: review
+Status: done
 
 ## Story
 
